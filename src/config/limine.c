@@ -79,7 +79,7 @@ limine_parse(const CHAR8 *config_data, UINTN config_size,
             SetMem(cur, sizeof(*cur), 0);
             cur->config_type = CONFIG_TYPE_LIMINE;
             cur->device_handle = device;
-            CopyMem(cur->config_path, config_path,
+            CopyMem(cur->config_path, (void *)config_path,
                     StrLen(config_path) * sizeof(CHAR16) + 2);
             cur->index = (UINT32)*count;
 

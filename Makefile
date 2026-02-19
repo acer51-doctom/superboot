@@ -104,7 +104,8 @@ $(TARGET_EFI): $(TARGET_SO)
 	$(OBJCOPY) \
 		-j .text -j .sdata -j .data -j .rodata \
 		-j .dynamic -j .dynsym -j .rel -j .rela -j .reloc \
-		--target=efi-app-x86_64 \
+		--input-target=elf64-x86-64 \
+		--output-target=pei-x86-64 \
 		--subsystem=10 \
 		$< $@
 	@echo "==> Built $@ ($(shell stat -c%s $@ 2>/dev/null || echo '?') bytes)"

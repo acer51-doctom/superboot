@@ -191,7 +191,7 @@ boot_efi_handover(SuperBootContext *ctx, const BootTarget *target,
     UINTN cmdline_len = sb_strlen8(target->cmdline);
     CHAR8 *cmdline = AllocatePool(cmdline_len + 1);
     if (cmdline) {
-        CopyMem(cmdline, target->cmdline, cmdline_len + 1);
+        CopyMem(cmdline, (void *)target->cmdline, cmdline_len + 1);
         bp->hdr.cmd_line_ptr = (UINT32)(UINTN)cmdline;
     }
 
@@ -274,7 +274,7 @@ boot_legacy_bzimage(SuperBootContext *ctx, const BootTarget *target,
     UINTN cmdline_len = sb_strlen8(target->cmdline);
     CHAR8 *cmdline = AllocatePool(cmdline_len + 1);
     if (cmdline) {
-        CopyMem(cmdline, target->cmdline, cmdline_len + 1);
+        CopyMem(cmdline, (void *)target->cmdline, cmdline_len + 1);
         bp->hdr.cmd_line_ptr = (UINT32)(UINTN)cmdline;
     }
 

@@ -251,7 +251,6 @@ sb_tui_run_menu(SuperBootContext *ctx)
             break;
 
         case TUI_KEY_ENTER:
-        case '\r':
             ctx->selected = selected;
             return EFI_SUCCESS;
 

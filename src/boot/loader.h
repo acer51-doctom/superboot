@@ -90,7 +90,7 @@ typedef struct {
  */
 typedef struct {
     UINT8             screen_info[64];   /* 0x000 */
-    UINT8             _pad1[0x1C0 - 64];
+    UINT8             _pad1[0x1E8 - 64];
     UINT8             e820_entries;       /* 0x1E8 */
     UINT8             _pad2[0x1F1 - 0x1E9];
     LinuxSetupHeader  hdr;               /* 0x1F1 */

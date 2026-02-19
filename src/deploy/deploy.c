@@ -15,6 +15,7 @@
  */
 
 #include "deploy.h"
+#include "../tui/tui.h"
 
 /* EFI System Partition GUID. */
 static EFI_GUID EspPartitionTypeGuid = {

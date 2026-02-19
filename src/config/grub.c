@@ -224,7 +224,6 @@ grub_parse(const CHAR8 *config_data, UINTN config_size,
     UINTN  depth = 0;            /* brace nesting depth               */
     BOOLEAN in_entry = FALSE;    /* are we inside a menuentry body?    */
     BootTarget *cur = NULL;      /* current entry being built          */
-    CHAR8 token[512];
     CHAR8 expanded[SB_MAX_PATH];
 
     *count = 0;
@@ -276,7 +275,7 @@ grub_parse(const CHAR8 *config_data, UINTN config_size,
                 sb_str8to16(cur->title, title, SB_MAX_TITLE);
                 cur->config_type = CONFIG_TYPE_GRUB;
                 cur->device_handle = device;
-                CopyMem(cur->config_path, config_path,
+                CopyMem(cur->config_path, (void *)config_path,
                         StrLen(config_path) * sizeof(CHAR16) + 2);
                 cur->index = (UINT32)*count;
                 in_entry = TRUE;
@@ -374,7 +373,7 @@ grub_parse(const CHAR8 *config_data, UINTN config_size,
              * can reference it.  Actual UUID→handle resolution is
              * deferred to boot time.
              */
-            CHAR8 flag[128], value[128];
+            CHAR8 flag[128];
             CHAR8 *set_var = NULL;
             CHAR8 *search_val = NULL;
 

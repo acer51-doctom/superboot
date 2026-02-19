@@ -32,7 +32,7 @@
 typedef enum {
     CONFIG_TYPE_UNKNOWN = 0,
     CONFIG_TYPE_GRUB,            /* /boot/grub/grub.cfg              */
-    CONFIG_TYPE_SYSTEMD_BOOT,    /* /loader/loader.conf + entries/*  */
+    CONFIG_TYPE_SYSTEMD_BOOT,    /* /loader/loader.conf + entries/   */
     CONFIG_TYPE_LIMINE,          /* limine.cfg                       */
 } ConfigType;
 

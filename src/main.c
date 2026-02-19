@@ -16,6 +16,29 @@ static EFI_STATUS sb_init_context(EFI_HANDLE image, EFI_SYSTEM_TABLE *st,
                                   SuperBootContext *ctx);
 static EFI_STATUS sb_boot_selected(SuperBootContext *ctx);
 
+/* Case-insensitive wide substring search (not provided by all gnu-efi builds). */
+static CHAR16 *
+sb_stristr16(const CHAR16 *haystack, const CHAR16 *needle)
+{
+    if (!haystack || !needle || !*needle)
+        return (CHAR16 *)haystack;
+
+    for (; *haystack; haystack++) {
+        const CHAR16 *h = haystack, *n = needle;
+        while (*h && *n) {
+            CHAR16 hc = (*h >= 'A' && *h <= 'Z') ? *h + 32 : *h;
+            CHAR16 nc = (*n >= 'A' && *n <= 'Z') ? *n + 32 : *n;
+            if (hc != nc)
+                break;
+            h++;
+            n++;
+        }
+        if (!*n)
+            return (CHAR16 *)haystack;
+    }
+    return NULL;
+}
+
 /* ================================================================== */
 /*  EFI entry point                                                    */
 /* ================================================================== */
@@ -96,7 +119,7 @@ sb_init_context(EFI_HANDLE image, EFI_SYSTEM_TABLE *st,
                             (void **)&loaded);
         if (!EFI_ERROR(s) && loaded->LoadOptions) {
             CHAR16 *opts = (CHAR16 *)loaded->LoadOptions;
-            if (StriStr(opts, L"verbose"))
+            if (sb_stristr16(opts, L"verbose"))
                 ctx->verbose = TRUE;
         }
     }

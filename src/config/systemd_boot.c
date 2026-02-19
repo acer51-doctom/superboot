@@ -1,5 +1,5 @@
 /*
- * systemd_boot.c — systemd-boot (loader.conf + entry/*.conf) parser
+ * systemd_boot.c — systemd-boot (loader.conf + entry .conf) parser
  *
  * systemd-boot stores its config on the ESP:
  *   /loader/loader.conf          — global settings (default, timeout)
@@ -30,7 +30,7 @@ parse_entry_file(const CHAR8 *data, UINTN size,
     SetMem(target, sizeof(*target), 0);
     target->config_type = CONFIG_TYPE_SYSTEMD_BOOT;
     target->device_handle = device;
-    CopyMem(target->config_path, config_path,
+    CopyMem(target->config_path, (void *)config_path,
             StrLen(config_path) * sizeof(CHAR16) + 2);
 
     CHAR8 *p = (CHAR8 *)data;
@@ -134,7 +134,7 @@ systemd_boot_parse(const CHAR8 *config_data, UINTN config_size,
     }
 
     /*
-     * Enumerate /loader/entries/*.conf on this device.
+     * Enumerate /loader/entries/ .conf files on this device.
      * We use the UEFI SimpleFileSystem protocol to list the directory.
      */
     EFI_FILE_PROTOCOL *root = NULL;
